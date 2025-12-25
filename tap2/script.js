@@ -37,7 +37,7 @@ let resetTimeout = null;
 
 btn.addEventListener("click", async () => {
   score++;
-  scoreEl.textContent = `Tap Score: ${score}`;
+  scoreEl.textContent = `🖱️Tap Score: ${score}`;
 
   btn.style.backgroundImage = "url('assets/hit.png')";
 
