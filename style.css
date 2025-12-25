@@ -36,32 +36,29 @@ body {
 .main-btn {
   width: 500px;
   height: 500px;
-  margin: 40px 0;
 
   background: url('assets/idle.png') center / cover no-repeat;
+
   border: none;
   border-radius: 50%;
+  padding: 0;
+
+  outline: none;
+  box-shadow: none;
+
   cursor: pointer;
 
-  outline: none;
-  box-shadow:
-    0 0 50px rgba(0,255,255,0.9),
-    inset 0 0 20px rgba(255,255,255,0.4);
-
+  /* PENTING UNTUK MOBILE */
   -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
   user-select: none;
-  touch-action: manipulation;
-  -webkit-appearance: none;
-  background-color: transparent;
+}
 
+/* HILANGKAN FOCUS & ACTIVE */
+.main-btn:focus,
+.main-btn:active {
   outline: none;
-  border: none;
-
-  box-shadow:
-    0 0 50px rgba(0,255,255,0.9),
-    inset 0 0 20px rgba(255,255,255,0.4);
-
-  -webkit-tap-highlight-color: transparent;
+  box-shadow: none;
 }
 
 /* LEADERBOARD */
