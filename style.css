@@ -1,66 +1,72 @@
-/* Reset dasar */
 * {
   box-sizing: border-box;
 }
 
-/* Body */
 body {
   margin: 0;
   min-height: 100vh;
+  background: url('assets/bg.jpg') center / cover no-repeat;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  text-align: center;
 
-  background-image: url('assets/bg.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-
-  font-family: Arial, sans-serif;
-  backdrop-filter: blur()
-}
-
-/* Container tengah */
-.container {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
-/* Text score */
-.score {
-  color: white;
-  font-size: 24px;
+/* SCORE */
+#score {
+  font-size: 2.2em;
   font-weight: bold;
-  margin-bottom: 20px;
-  user-select: none;
+  margin-top: 20px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
 
-/* Hilangkan efek biru browser */
-button {
-  outline: none;
-  box-shadow: none;
-  border: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* Tombol utama */
+/* BUTTON */
 .main-btn {
   width: 400px;
   height: 400px;
+  margin: 40px 0;
 
   background: url('assets/idle.png') center / cover no-repeat;
-  background-color: transparent;
-
+  border: none;
   border-radius: 50%;
   cursor: pointer;
-  padding: 0;
 
+  outline: none;
+  box-shadow:
+    0 0 40px rgba(0,255,255,0.9),
+    inset 0 0 20px rgba(255,255,255,0.4);
+
+  -webkit-tap-highlight-color: transparent;
   user-select: none;
-  -webkit-user-select: none;
   touch-action: manipulation;
 }
 
-/* Efek tekan */
-.main-btn:active {
-  transform: scale(0.95);
+/* LEADERBOARD */
+#leaderboard {
+  width: 85%;
+  max-width: 400px;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(8px);
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+#leaderboard h2 {
+  margin-top: 0;
+}
+
+#leaderboard ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#leaderboard li {
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
 }

@@ -5,19 +5,25 @@ const SUPABASE_URL = 'https://qqnmfjtsdqyjyqsiovjd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_AeDi45nGx1WsV1YtyT-guw_CSoDk10f';
 
 const sb = window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
 /* =========================
    GAME STATE
 ========================= */
 let score = 0;
-const username = localStorage.getItem("username") ||
-prompt("Masukkan username:");
+let username = localStorage.getItem("username");
 
-localStorage.setItem("username", username);
-
+if (!username) {
+  username = prompt("Masukkan username:");
+  if (username.length > 16) {
+    alert("Username maksimal 16 karakter");
+    location.reload();
+  } else {
+    localStorage.setItem("username", username);
+  }
+}
 const scoreEl = document.getElementById("score");
 const btn = document.getElementById("tapBtn");
 
@@ -26,7 +32,7 @@ const btn = document.getElementById("tapBtn");
 ========================= */
 let resetTimeout = null;
 
-btn.addEventListener("click", () => {
+btn.addEventListener("click", async () => {
   score++;
   scoreEl.textContent = `Tap Score: ${score}`;
 
@@ -40,30 +46,22 @@ btn.addEventListener("click", () => {
     btn.style.backgroundImage = "url('assets/idle.png')";
   }, 120);
 
-  saveScore(); // ⬅️ PENTING
-  console.log("Saving score for:", username);
+  await saveScore();
 });
 
 /* =========================
-   SAVE SCORE (UPSERT)
+   SAVE SCORE (RPC)
 ========================= */
 async function saveScore() {
   console.log("Saving score for:", username);
 
-  // 1️⃣ Coba UPDATE dulu
-  const { data, error } = await supabase
-    .from("leaderboard")
-    .update({ score: supabase.rpc ? undefined : undefined })
-    .eq("username", username)
-    .select();
-
-  // Cara benar pakai increment:
-  const updateResult = await supabase.rpc("increment_score", {
+  const { error } = await sb.rpc("increment_score", {
     uname: username
   });
 
-  if (updateResult.error) {
-    console.error("RPC error:", updateResult.error);
+  if (error) {
+    console.error("Save error:", error);
+    return;
   }
 
   loadLeaderboard();
@@ -73,20 +71,25 @@ async function saveScore() {
    LOAD LEADERBOARD
 ========================= */
 async function loadLeaderboard() {
-const { data } = await sb
-.from("leaderboard")
-.select("*")
-.order("score", { ascending: false })
-.limit(10);
+  const { data, error } = await sb
+    .from("leaderboard")
+    .select("*")
+    .order("score", { ascending: false })
+    .limit(10);
 
-const list = document.getElementById("leaderboardList");
-list.innerHTML = "";
+  if (error) {
+    console.error(error);
+    return;
+  }
 
-data.forEach((row, i) => {
-const li = document.createElement("li");
-li.textContent = `${i + 1}. ${row.username} — ${row.score}`;
-list.appendChild(li);
-});
+  const list = document.getElementById("leaderboardList");
+  list.innerHTML = "";
+
+  data.forEach((row, i) => {
+    const li = document.createElement("li");
+    li.textContent = `${i + 1}. ${row.username} — ${row.score}`;
+    list.appendChild(li);
+  });
 }
 
 loadLeaderboard();

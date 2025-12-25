@@ -2,17 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tap Game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
-  <div class="container">
-    <div class="score">Tap Score: <span id="score">0</span></div>
-    <button class="main-btn" id="tapBtn"></button>
+  <div id="score">Tap Score: 0</div>
+
+  <button id="tapBtn" class="main-btn"></button>
+
+  <div id="leaderboard">
+    <h2>Leaderboard</h2>
+    <ul id="leaderboardList"></ul>
   </div>
 
+  <!-- JS -->
   <script src="script.js"></script>
 </body>
 </html>
