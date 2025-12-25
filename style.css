@@ -1,0 +1,66 @@
+/* Reset dasar */
+* {
+  box-sizing: border-box;
+}
+
+/* Body */
+body {
+  margin: 0;
+  min-height: 100vh;
+
+  background-image: url('assets/bg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  font-family: Arial, sans-serif;
+  backdrop-filter: blur()
+}
+
+/* Container tengah */
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Text score */
+.score {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  user-select: none;
+}
+
+/* Hilangkan efek biru browser */
+button {
+  outline: none;
+  box-shadow: none;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Tombol utama */
+.main-btn {
+  width: 400px;
+  height: 400px;
+
+  background: url('assets/idle.png') center / cover no-repeat;
+  background-color: transparent;
+
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+/* Efek tekan */
+.main-btn:active {
+  transform: scale(0.95);
+}
