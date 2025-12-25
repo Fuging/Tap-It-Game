@@ -51,6 +51,17 @@ body {
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   touch-action: manipulation;
+  -webkit-appearance: none;
+  background-color: transparent;
+
+  outline: none;
+  border: none;
+
+  box-shadow:
+    0 0 50px rgba(0,255,255,0.9),
+    inset 0 0 20px rgba(255,255,255,0.4);
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* LEADERBOARD */
