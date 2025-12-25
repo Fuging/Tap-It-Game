@@ -10,20 +10,23 @@ const sb = window.supabase.createClient(
 );
 
 /* =========================
+   GET FLAG
+========================= */
+function countryToFlagEmoji(countryCode) {
+  if (!countryCode || countryCode.length !== 2) return "🏳️";
+
+  const codePoints = [...countryCode.toUpperCase()].map(
+    char => 127397 + char.charCodeAt()
+  );
+
+  return String.fromCodePoint(...codePoints);
+}
+
+/* =========================
    GAME STATE
 ========================= */
 let score = 0;
-let username = localStorage.getItem("username");
 
-if (!username) {
-  username = prompt("Enter Your Name:");
-  if (username.length > 16) {
-    alert("Username maksimal 16 karakter");
-    location.reload();
-  } else {
-    localStorage.setItem("username", username);
-  }
-}
 const scoreEl = document.getElementById("score");
 const btn = document.getElementById("tapBtn");
 
@@ -48,21 +51,38 @@ btn.addEventListener("click", async () => {
 
   await saveScore();
 });
+/* =========================
+   Get Country
+============================ */
+async function getCountry() {
+  const cached = localStorage.getItem("countryData");
+  if (cached) return JSON.parse(cached);
+
+  try {
+    const res = await fetch("https://ipapi.co/json/");
+    const data = await res.json();
+
+    const countryData = {
+      code: data.country_code || "XX",
+      name: data.country_name || "Unknown"
+    };
+
+    localStorage.setItem("countryData", JSON.stringify(countryData));
+    return countryData;
+  } catch {
+    return { code: "XX", name: "Unknown" };
+  }
+}
 
 /* =========================
    SAVE SCORE (RPC)
 ========================= */
 async function saveScore() {
-  console.log("Saving score for:", username);
+  const country = await getCountry();
 
-  const { error } = await sb.rpc("increment_score", {
-    uname: username
+  await sb.rpc("increment_country_score", {
+    ctry: country.code
   });
-
-  if (error) {
-    console.error("Save error:", error);
-    return;
-  }
 
   loadLeaderboard();
 }
@@ -70,9 +90,18 @@ async function saveScore() {
 /* =========================
    LOAD LEADERBOARD
 ========================= */
+let myCountry = {
+  code: "XX",
+  name: "Unknown"
+};
+(async function init() {
+  myCountry = await getCountry();
+  loadLeaderboard();
+})();
+
 async function loadLeaderboard() {
   const { data, error } = await sb
-    .from("leaderboard")
+    .from("leaderboard_country")
     .select("*")
     .order("score", { ascending: false })
     .limit(10);
@@ -87,9 +116,25 @@ async function loadLeaderboard() {
 
   data.forEach((row, i) => {
     const li = document.createElement("li");
-    li.textContent = `${i + 1}. ${row.username} — ${row.score}`;
+
+    const flag = countryToFlagEmoji(row.country);
+
+    const countryName =
+      row.country === myCountry.code
+        ? myCountry.name
+        : row.country;
+
+    li.innerHTML = `
+      <span class="rank">#${i + 1}</span>
+      <span class="flag">${flag}</span>
+      <span class="country">${countryName}</span>
+      <span class="score">${row.score}</span>
+    `;
+
+    if (row.country === myCountry.code) {
+      li.style.border = "2px solid gold";
+    }
+
     list.appendChild(li);
   });
 }
-
-loadLeaderboard();
