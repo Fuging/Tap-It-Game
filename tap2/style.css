@@ -1,0 +1,112 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: url('assets/bg.jpg') center / cover no-repeat;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* SCORE */
+#score {
+  font-size: 2.2em;
+  font-weight: bold;
+  margin-top: 20px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+/* BUTTON */
+.main-btn {
+  width: 500px;
+  height: 500px;
+  margin: 40px 0;
+
+  background: url('assets/idle.png') center / cover no-repeat;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+
+  outline: none;
+  box-shadow:
+    0 0 50px rgba(0,255,255,0.9),
+    inset 0 0 20px rgba(255,255,255,0.4);
+
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+/* LEADERBOARD */
+#leaderboard {
+  width: 85%;
+  max-width: 400px;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(8px);
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+#leaderboard h2 {
+  margin-top: 0;
+}
+
+#leaderboard ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#leaderboard li {
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+#leaderboardList {
+  list-style: none;
+  padding: 0;
+  margin: 10px auto;
+  width: 90%;
+  max-width: 360px;
+}
+
+#leaderboardList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: rgba(0,0,0,0.5);
+  color: white;
+
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.rank {
+  font-weight: bold;
+  opacity: 0.8;
+}
+
+.flag {
+  font-size: 22px;
+}
+
+.country {
+  flex: 1;
+  margin-left: 8px;
+}
+
+.score {
+  font-weight: bold;
+}

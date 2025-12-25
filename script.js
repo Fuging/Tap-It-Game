@@ -16,7 +16,7 @@ let score = 0;
 let username = localStorage.getItem("username");
 
 if (!username) {
-  username = prompt("Masukkan username:");
+  username = prompt("Enter Your Name:");
   if (username.length > 16) {
     alert("Username maksimal 16 karakter");
     location.reload();
