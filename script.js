@@ -38,9 +38,9 @@ localStorage.setItem("ScoreRN", skor);
 }
 
 function loadScore() {
-  const localskor = localStorage.getItem("ScoreRN");
-  scoreEl.textContent = `🖱️Tap Score: ${localskor}`;
+const localskor = localStorage.getItem("ScoreRN");
   if (localskor !== null){
+    scoreEl.textContent = `🖱️Tap Score: ${localskor}`;
     score = localskor;
   }
 }
