@@ -31,12 +31,27 @@ const scoreEl = document.getElementById("score");
 const btn = document.getElementById("tapBtn");
 
 /* =========================
+   SAVE SCORE IN LOCALSTORAGE
+========================= */
+function svlcl(skor) {
+  localStorage.setItem("ScoreRN",skor);
+}
+
+function loadScore() {
+  const localskor = localStorage.getItem("ScoreRN");
+  scoreEl.textContent = `🖱️Tap Score: ${localskor}`;
+  score = localskor;
+}
+
+loadScore();
+/* =========================
    TAP HANDLER
 ========================= */
 let resetTimeout = null;
 
 btn.addEventListener("click", async () => {
   score++;
+  svlcl(score)
   scoreEl.textContent = `🖱️Tap Score: ${score}`;
 
   btn.style.backgroundImage = "url('assets/hit.png')";
